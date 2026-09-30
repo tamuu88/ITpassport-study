@@ -86,4 +86,287 @@
       background: #f5f7fa;
       border-radius: 10px;
       line-height: 1.7;
-   
+    }
+
+    .result {
+      text-align: center;
+    }
+
+    .score {
+      font-size: 36px;
+      font-weight: bold;
+      margin: 20px 0;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <h1>ITパスポート 5問</h1>
+
+  <!-- ホーム -->
+  <div id="home" class="card">
+    <h2>今日の学習</h2>
+
+    <p>
+      まずは5問だけ<br>
+      気軽に勉強しよう。
+    </p>
+
+    <button class="main-button" onclick="startQuiz()">
+      今日の5問を開始
+    </button>
+  </div>
+
+
+  <!-- 問題 -->
+  <div id="quiz" class="card hidden">
+
+    <div id="questionNumber" class="question-number"></div>
+
+    <div id="question" class="question"></div>
+
+    <div id="choices"></div>
+
+    <div id="explanation" class="explanation hidden"></div>
+
+    <button
+      id="nextButton"
+      class="main-button hidden"
+      onclick="nextQuestion()">
+      次の問題
+    </button>
+
+  </div>
+
+
+  <!-- 結果 -->
+  <div id="result" class="card result hidden">
+
+    <h2>今日の結果</h2>
+
+    <div id="score" class="score"></div>
+
+    <p id="resultMessage"></p>
+
+    <button class="main-button" onclick="startQuiz()">
+      もう一度やる
+    </button>
+
+    <button onclick="goHome()">
+      ホームに戻る
+    </button>
+
+  </div>
+
+</div>
+
+
+<script>
+
+const questions = [
+
+  {
+    question: "顧客との関係を管理するための仕組みはどれか。",
+    choices: [
+      "CRM",
+      "SCM",
+      "ERP",
+      "GPS"
+    ],
+    answer: 0,
+    explanation:
+      "CRMはCustomer Relationship Managementの略で、顧客との関係を管理する考え方や仕組みです。"
+  },
+
+  {
+    question: "企業の経営戦略を実現するためにITを活用することを何というか。",
+    choices: [
+      "ITガバナンス",
+      "IT戦略",
+      "デバッグ",
+      "バックアップ"
+    ],
+    answer: 1,
+    explanation:
+      "IT戦略とは、企業の経営目標を実現するためにITをどのように活用するかを考えることです。"
+  },
+
+  {
+    question: "コンピュータウイルスなどから情報システムを守るための対策を何というか。",
+    choices: [
+      "情報セキュリティ",
+      "在庫管理",
+      "財務管理",
+      "品質管理"
+    ],
+    answer: 0,
+    explanation:
+      "情報セキュリティは、情報の機密性・完全性・可用性などを守るための仕組みです。"
+  },
+
+  {
+    question: "Webサイトを閲覧するときに使用する代表的なプロトコルはどれか。",
+    choices: [
+      "HTTP",
+      "USB",
+      "CPU",
+      "RAM"
+    ],
+    answer: 0,
+    explanation:
+      "HTTPはWebブラウザとWebサーバーの間で情報をやり取りするための通信プロトコルです。"
+  },
+
+  {
+    question: "PDCAサイクルの「C」が表すものはどれか。",
+    choices: [
+      "Create",
+      "Control",
+      "Check",
+      "Change"
+    ],
+    answer: 2,
+    explanation:
+      "PDCAはPlan（計画）、Do（実行）、Check（評価）、Act（改善）のサイクルです。"
+  }
+
+];
+
+
+let currentQuestion = 0;
+let score = 0;
+
+
+function startQuiz() {
+
+  currentQuestion = 0;
+  score = 0;
+
+  document.getElementById("home").classList.add("hidden");
+  document.getElementById("result").classList.add("hidden");
+  document.getElementById("quiz").classList.remove("hidden");
+
+  showQuestion();
+}
+
+
+function showQuestion() {
+
+  const q = questions[currentQuestion];
+
+  document.getElementById("questionNumber").textContent =
+    `第${currentQuestion + 1}問 / ${questions.length}問`;
+
+  document.getElementById("question").textContent =
+    q.question;
+
+  const choices = document.getElementById("choices");
+
+  choices.innerHTML = "";
+
+  q.choices.forEach((choice, index) => {
+
+    const button = document.createElement("button");
+
+    button.textContent = choice;
+
+    button.onclick = () => checkAnswer(index, button);
+
+    choices.appendChild(button);
+
+  });
+
+  document.getElementById("explanation").classList.add("hidden");
+  document.getElementById("nextButton").classList.add("hidden");
+}
+
+
+function checkAnswer(selected, selectedButton) {
+
+  const q = questions[currentQuestion];
+
+  const buttons =
+    document.querySelectorAll("#choices button");
+
+  buttons.forEach(button => {
+    button.disabled = true;
+  });
+
+  if (selected === q.answer) {
+
+    score++;
+
+    selectedButton.classList.add("correct");
+
+    document.getElementById("explanation").innerHTML =
+      "<strong>正解！</strong><br><br>" +
+      q.explanation;
+
+  } else {
+
+    selectedButton.classList.add("incorrect");
+
+    buttons[q.answer].classList.add("correct");
+
+    document.getElementById("explanation").innerHTML =
+      "<strong>不正解</strong><br><br>" +
+      q.explanation;
+  }
+
+  document.getElementById("explanation").classList.remove("hidden");
+
+  document.getElementById("nextButton").classList.remove("hidden");
+
+}
+
+
+function nextQuestion() {
+
+  currentQuestion++;
+
+  if (currentQuestion < questions.length) {
+
+    showQuestion();
+
+  } else {
+
+    showResult();
+
+  }
+}
+
+
+function showResult() {
+
+  document.getElementById("quiz").classList.add("hidden");
+  document.getElementById("result").classList.remove("hidden");
+
+  document.getElementById("score").textContent =
+    `${score} / ${questions.length}`;
+
+  const percentage =
+    Math.round(score / questions.length * 100);
+
+  document.getElementById("resultMessage").textContent =
+    `正答率 ${percentage}%`;
+}
+
+
+function goHome() {
+
+  document.getElementById("result").classList.add("hidden");
+  document.getElementById("home").classList.remove("hidden");
+
+}
+
+</script>
+
+</body>
+</html>
