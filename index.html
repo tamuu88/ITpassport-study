@@ -1,140 +1,272 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ITパスポート 5問</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<title>ITパスポート勉強ノート</title>
 
-    body {
-      margin: 0;
-      font-family: sans-serif;
-      background: #f5f7fa;
-      color: #333;
-    }
+<style>
 
-    .app {
-      max-width: 480px;
-      min-height: 100vh;
-      margin: 0 auto;
-      padding: 24px 18px;
-    }
+* {
+  box-sizing: border-box;
+}
 
-    h1 {
-      text-align: center;
-      font-size: 24px;
-      margin-bottom: 30px;
-    }
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background: #f5f7fa;
+  color: #333;
+}
 
-    .card {
-      background: white;
-      border-radius: 16px;
-      padding: 24px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    }
+.app {
+  max-width: 480px;
+  min-height: 100vh;
+  margin: auto;
+  padding: 24px 18px;
+}
 
-    .question-number {
-      font-size: 14px;
-      color: #777;
-      margin-bottom: 15px;
-    }
+h1 {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 28px;
+}
 
-    .question {
-      font-size: 19px;
-      line-height: 1.7;
-      font-weight: bold;
-      margin-bottom: 22px;
-    }
+h2 {
+  font-size: 20px;
+}
 
-    button {
-      width: 100%;
-      border: none;
-      border-radius: 12px;
-      padding: 15px;
-      margin-top: 10px;
-      font-size: 16px;
-      cursor: pointer;
-      background: #e9eef5;
-      color: #333;
-    }
+h3 {
+  font-size: 17px;
+}
 
-    button:hover {
-      opacity: 0.85;
-    }
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+}
 
-    .main-button {
-      background: #333;
-      color: white;
-      font-weight: bold;
-    }
+button {
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  padding: 15px;
+  margin-top: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  background: #e9eef5;
+  color: #333;
+}
 
-    .correct {
-      background: #dff5e5;
-    }
+button:hover {
+  opacity: 0.85;
+}
 
-    .incorrect {
-      background: #fde2e2;
-    }
+.main-button {
+  background: #333;
+  color: white;
+  font-weight: bold;
+}
 
-    .explanation {
-      margin-top: 20px;
-      padding: 16px;
-      background: #f5f7fa;
-      border-radius: 10px;
-      line-height: 1.7;
-    }
+.chapter-button {
+  text-align: left;
+  background: white;
+  border: 1px solid #ddd;
+}
 
-    .result {
-      text-align: center;
-    }
+.item-button {
+  text-align: left;
+  background: white;
+  border: 1px solid #ddd;
+}
 
-    .score {
-      font-size: 36px;
-      font-weight: bold;
-      margin: 20px 0;
-    }
+.badge {
+  display: inline-block;
+  font-size: 12px;
+  padding: 4px 7px;
+  border-radius: 6px;
+  margin-left: 5px;
+  background: #eee;
+}
 
-    .hidden {
-      display: none;
-    }
-  </style>
+.important {
+  background: #ffe8b3;
+}
+
+.super-important {
+  background: #ffd6d6;
+}
+
+textarea {
+  width: 100%;
+  min-height: 180px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.back-button {
+  background: transparent;
+  text-align: left;
+  padding: 5px 0;
+  margin-bottom: 10px;
+}
+
+.hidden {
+  display: none;
+}
+
+.small-text {
+  font-size: 13px;
+  color: #777;
+  line-height: 1.6;
+}
+
+</style>
 </head>
 
 <body>
 
 <div class="app">
 
-  <h1>ITパスポート 5問</h1>
+<h1>ITパスポート勉強ノート</h1>
 
-  <!-- ホーム -->
-  <div id="home" class="card">
+
+<!-- ホーム -->
+
+<div id="home">
+
+  <div class="card">
+
     <h2>今日の学習</h2>
 
     <p>
-      まずは5問だけ<br>
+      まずは5問だけ。<br>
       気軽に勉強しよう。
     </p>
 
     <button class="main-button" onclick="startQuiz()">
       今日の5問を開始
     </button>
+
   </div>
 
 
-  <!-- 問題 -->
-  <div id="quiz" class="card hidden">
+  <div class="card">
 
-    <div id="questionNumber" class="question-number"></div>
+    <h2>📖 テキストから勉強</h2>
 
-    <div id="question" class="question"></div>
+    <p class="small-text">
+      テキストの項目ごとに勉強できます。
+    </p>
+
+    <button class="chapter-button"
+      onclick="openChapter(0)">
+      1. ハードウェアと基礎理論
+    </button>
+
+    <button class="chapter-button"
+      onclick="openChapter(1)">
+      2. ソフトウェア
+    </button>
+
+    <button class="chapter-button"
+      onclick="openChapter(2)">
+      3. システム構築
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- 章一覧 -->
+
+<div id="chapter" class="hidden">
+
+  <button class="back-button" onclick="goHome()">
+    ← ホームに戻る
+  </button>
+
+  <div class="card">
+
+    <h2 id="chapterTitle"></h2>
+
+    <div id="itemList"></div>
+
+  </div>
+
+</div>
+
+
+<!-- 項目ページ -->
+
+<div id="itemPage" class="hidden">
+
+  <button class="back-button" onclick="backToChapter()">
+    ← 項目一覧に戻る
+  </button>
+
+  <div class="card">
+
+    <h2 id="itemTitle"></h2>
+
+    <div id="itemImportance"></div>
+
+    <hr>
+
+    <h3>自分のメモ</h3>
+
+    <textarea
+      id="memo"
+      placeholder="ここに自分の言葉でメモを書こう。">
+    </textarea>
+
+    <button
+      class="main-button"
+      onclick="saveMemo()">
+      メモを保存
+    </button>
+
+    <p id="saveMessage" class="small-text"></p>
+
+  </div>
+
+  <div class="card">
+
+    <h3>問題</h3>
+
+    <p class="small-text">
+      この項目の問題を解く機能は、あとから追加できます。
+    </p>
+
+    <button>
+      この項目の問題を解く
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- クイズ -->
+
+<div id="quiz" class="hidden">
+
+  <div class="card">
+
+    <div id="questionNumber"></div>
+
+    <h2 id="question"></h2>
 
     <div id="choices"></div>
 
-    <div id="explanation" class="explanation hidden"></div>
+    <div id="explanation" class="hidden"></div>
 
     <button
       id="nextButton"
@@ -145,17 +277,24 @@
 
   </div>
 
+</div>
 
-  <!-- 結果 -->
-  <div id="result" class="card result hidden">
+
+<!-- 結果 -->
+
+<div id="result" class="hidden">
+
+  <div class="card">
 
     <h2>今日の結果</h2>
 
-    <div id="score" class="score"></div>
+    <h1 id="score"></h1>
 
     <p id="resultMessage"></p>
 
-    <button class="main-button" onclick="startQuiz()">
+    <button
+      class="main-button"
+      onclick="startQuiz()">
       もう一度やる
     </button>
 
@@ -168,71 +307,445 @@
 </div>
 
 
+</div>
+
+
 <script>
+
+
+/* =========================
+   テキストの構成
+========================= */
+
+const chapters = [
+
+  {
+    title: "1. ハードウェアと基礎理論",
+
+    items: [
+
+      {
+        title: "1-01 情報に関する理論",
+        importance: "必須"
+      },
+
+      {
+        title: "1-02 コンピュータの構成とCPU",
+        importance: "必須"
+      },
+
+      {
+        title: "1-03 主記憶と補助記憶",
+        importance: "必須"
+      },
+
+      {
+        title: "1-04 半導体メモリ",
+        importance: ""
+      },
+
+      {
+        title: "1-05 入出力装置",
+        importance: ""
+      },
+
+      {
+        title: "1-06 入出力インターフェース",
+        importance: ""
+      },
+
+      {
+        title: "1-07 AI",
+        importance: "超重要"
+      },
+
+      {
+        title: "1-08 確率と統計",
+        importance: ""
+      },
+
+      {
+        title: "1-09 基数変換",
+        importance: ""
+      }
+
+    ]
+  },
+
+
+  {
+    title: "2. ソフトウェア",
+
+    items: [
+
+      {
+        title: "2-01 ソフトウェア",
+        importance: "必須"
+      },
+
+      {
+        title: "2-02 ファイル管理",
+        importance: "必須"
+      },
+
+      {
+        title: "2-03 ファイルのバックアップ",
+        importance: ""
+      },
+
+      {
+        title: "2-04 表計算：相対参照と絶対参照",
+        importance: "必須"
+      },
+
+      {
+        title: "2-05 表計算：関数",
+        importance: ""
+      },
+
+      {
+        title: "2-06 表計算：関数の応用",
+        importance: ""
+      },
+
+      {
+        title: "2-07 ユーザインタフェース",
+        importance: "必須"
+      },
+
+      {
+        title: "2-08 マルチメディア",
+        importance: ""
+      }
+
+    ]
+  },
+
+
+  {
+    title: "3. システム構築",
+
+    items: [
+
+      {
+        title: "3-01 コンピュータの形態",
+        importance: ""
+      },
+
+      {
+        title: "3-02 システム構成",
+        importance: "必須"
+      },
+
+      {
+        title: "3-03 システムの信頼性",
+        importance: "超重要"
+      },
+
+      {
+        title: "3-04 システムの評価",
+        importance: ""
+      },
+
+      {
+        title: "3-05 IoTシステムと組み込みシステム",
+        importance: "超重要"
+      },
+
+      {
+        title: "3-06 ソリューションビジネスとシステム活用促進",
+        importance: "必須"
+      }
+
+    ]
+  }
+
+];
+
+
+let currentChapter = 0;
+let currentItem = 0;
+
+
+/* =========================
+   画面切り替え
+========================= */
+
+function hideAll() {
+
+  document.getElementById("home").classList.add("hidden");
+
+  document.getElementById("chapter").classList.add("hidden");
+
+  document.getElementById("itemPage").classList.add("hidden");
+
+  document.getElementById("quiz").classList.add("hidden");
+
+  document.getElementById("result").classList.add("hidden");
+
+}
+
+
+/* =========================
+   ホーム
+========================= */
+
+function goHome() {
+
+  hideAll();
+
+  document.getElementById("home").classList.remove("hidden");
+
+}
+
+
+/* =========================
+   章を開く
+========================= */
+
+function openChapter(index) {
+
+  currentChapter = index;
+
+  hideAll();
+
+  document
+    .getElementById("chapter")
+    .classList.remove("hidden");
+
+  document
+    .getElementById("chapterTitle")
+    .textContent =
+    chapters[index].title;
+
+  const list =
+    document.getElementById("itemList");
+
+  list.innerHTML = "";
+
+  chapters[index].items.forEach(
+    (item, index) => {
+
+      const button =
+        document.createElement("button");
+
+      button.className = "item-button";
+
+      button.innerHTML =
+        item.title +
+        getBadge(item.importance);
+
+      button.onclick =
+        () => openItem(index);
+
+      list.appendChild(button);
+
+    }
+  );
+
+}
+
+
+/* =========================
+   重要度バッジ
+========================= */
+
+function getBadge(importance) {
+
+  if (!importance) {
+    return "";
+  }
+
+  if (importance === "超重要") {
+
+    return `
+      <span class="badge super-important">
+        超重要
+      </span>
+    `;
+
+  }
+
+  return `
+    <span class="badge important">
+      必須
+    </span>
+  `;
+
+}
+
+
+/* =========================
+   項目ページ
+========================= */
+
+function openItem(index) {
+
+  currentItem = index;
+
+  hideAll();
+
+  document
+    .getElementById("itemPage")
+    .classList.remove("hidden");
+
+  const item =
+    chapters[currentChapter].items[index];
+
+  document
+    .getElementById("itemTitle")
+    .textContent =
+    item.title;
+
+  document
+    .getElementById("itemImportance")
+    .innerHTML =
+    getBadge(item.importance);
+
+  const key =
+    "memo-" +
+    currentChapter +
+    "-" +
+    currentItem;
+
+  const savedMemo =
+    localStorage.getItem(key);
+
+  document
+    .getElementById("memo")
+    .value =
+    savedMemo || "";
+
+  document
+    .getElementById("saveMessage")
+    .textContent = "";
+
+}
+
+
+/* =========================
+   メモ保存
+========================= */
+
+function saveMemo() {
+
+  const key =
+    "memo-" +
+    currentChapter +
+    "-" +
+    currentItem;
+
+  const memo =
+    document.getElementById("memo").value;
+
+  localStorage.setItem(key, memo);
+
+  document
+    .getElementById("saveMessage")
+    .textContent =
+    "保存しました。";
+
+}
+
+
+/* =========================
+   章に戻る
+========================= */
+
+function backToChapter() {
+
+  openChapter(currentChapter);
+
+}
+
+
+/* =========================
+   クイズ
+========================= */
 
 const questions = [
 
   {
-    question: "顧客との関係を管理するための仕組みはどれか。",
+    question:
+      "顧客との関係を管理するための仕組みはどれか。",
+
     choices: [
       "CRM",
       "SCM",
       "ERP",
       "GPS"
     ],
+
     answer: 0,
+
     explanation:
       "CRMはCustomer Relationship Managementの略で、顧客との関係を管理する考え方や仕組みです。"
   },
 
   {
-    question: "企業の経営戦略を実現するためにITを活用することを何というか。",
+    question:
+      "企業の経営戦略を実現するためにITを活用することを何というか。",
+
     choices: [
       "ITガバナンス",
       "IT戦略",
       "デバッグ",
       "バックアップ"
     ],
+
     answer: 1,
+
     explanation:
       "IT戦略とは、企業の経営目標を実現するためにITをどのように活用するかを考えることです。"
   },
 
   {
-    question: "コンピュータウイルスなどから情報システムを守るための対策を何というか。",
+    question:
+      "コンピュータウイルスなどから情報システムを守るための対策を何というか。",
+
     choices: [
       "情報セキュリティ",
       "在庫管理",
       "財務管理",
       "品質管理"
     ],
+
     answer: 0,
+
     explanation:
       "情報セキュリティは、情報の機密性・完全性・可用性などを守るための仕組みです。"
   },
 
   {
-    question: "Webサイトを閲覧するときに使用する代表的なプロトコルはどれか。",
+    question:
+      "Webサイトを閲覧するときに使用する代表的なプロトコルはどれか。",
+
     choices: [
       "HTTP",
       "USB",
       "CPU",
       "RAM"
     ],
+
     answer: 0,
+
     explanation:
       "HTTPはWebブラウザとWebサーバーの間で情報をやり取りするための通信プロトコルです。"
   },
 
   {
-    question: "PDCAサイクルの「C」が表すものはどれか。",
+    question:
+      "PDCAサイクルの「C」が表すものはどれか。",
+
     choices: [
       "Create",
       "Control",
       "Check",
       "Change"
     ],
+
     answer: 2,
+
     explanation:
       "PDCAはPlan（計画）、Do（実行）、Check（評価）、Act（改善）のサイクルです。"
   }
@@ -247,82 +760,125 @@ let score = 0;
 function startQuiz() {
 
   currentQuestion = 0;
+
   score = 0;
 
-  document.getElementById("home").classList.add("hidden");
-  document.getElementById("result").classList.add("hidden");
-  document.getElementById("quiz").classList.remove("hidden");
+  hideAll();
+
+  document
+    .getElementById("quiz")
+    .classList.remove("hidden");
 
   showQuestion();
+
 }
 
 
 function showQuestion() {
 
-  const q = questions[currentQuestion];
+  const q =
+    questions[currentQuestion];
 
-  document.getElementById("questionNumber").textContent =
+  document
+    .getElementById("questionNumber")
+    .textContent =
     `第${currentQuestion + 1}問 / ${questions.length}問`;
 
-  document.getElementById("question").textContent =
+  document
+    .getElementById("question")
+    .textContent =
     q.question;
 
-  const choices = document.getElementById("choices");
+  const choices =
+    document.getElementById("choices");
 
   choices.innerHTML = "";
 
-  q.choices.forEach((choice, index) => {
+  q.choices.forEach(
+    (choice, index) => {
 
-    const button = document.createElement("button");
+      const button =
+        document.createElement("button");
 
-    button.textContent = choice;
+      button.textContent =
+        choice;
 
-    button.onclick = () => checkAnswer(index, button);
+      button.onclick =
+        () => checkAnswer(index, button);
 
-    choices.appendChild(button);
+      choices.appendChild(button);
 
-  });
+    }
+  );
 
-  document.getElementById("explanation").classList.add("hidden");
-  document.getElementById("nextButton").classList.add("hidden");
+  document
+    .getElementById("explanation")
+    .classList.add("hidden");
+
+  document
+    .getElementById("nextButton")
+    .classList.add("hidden");
+
 }
 
 
-function checkAnswer(selected, selectedButton) {
+function checkAnswer(
+  selected,
+  selectedButton
+) {
 
-  const q = questions[currentQuestion];
+  const q =
+    questions[currentQuestion];
 
   const buttons =
-    document.querySelectorAll("#choices button");
+    document.querySelectorAll(
+      "#choices button"
+    );
 
-  buttons.forEach(button => {
-    button.disabled = true;
-  });
+  buttons.forEach(
+    button => {
+      button.disabled = true;
+    }
+  );
 
-  if (selected === q.answer) {
+  if (
+    selected === q.answer
+  ) {
 
     score++;
 
-    selectedButton.classList.add("correct");
+    selectedButton.style.background =
+      "#dff5e5";
 
-    document.getElementById("explanation").innerHTML =
+    document
+      .getElementById("explanation")
+      .innerHTML =
       "<strong>正解！</strong><br><br>" +
       q.explanation;
 
   } else {
 
-    selectedButton.classList.add("incorrect");
+    selectedButton.style.background =
+      "#fde2e2";
 
-    buttons[q.answer].classList.add("correct");
+    buttons[q.answer].style.background =
+      "#dff5e5";
 
-    document.getElementById("explanation").innerHTML =
+    document
+      .getElementById("explanation")
+      .innerHTML =
       "<strong>不正解</strong><br><br>" +
       q.explanation;
+
   }
 
-  document.getElementById("explanation").classList.remove("hidden");
+  document
+    .getElementById("explanation")
+    .classList.remove("hidden");
 
-  document.getElementById("nextButton").classList.remove("hidden");
+  document
+    .getElementById("nextButton")
+    .classList.remove("hidden");
 
 }
 
@@ -331,7 +887,10 @@ function nextQuestion() {
 
   currentQuestion++;
 
-  if (currentQuestion < questions.length) {
+  if (
+    currentQuestion <
+    questions.length
+  ) {
 
     showQuestion();
 
@@ -340,29 +899,34 @@ function nextQuestion() {
     showResult();
 
   }
+
 }
 
 
 function showResult() {
 
-  document.getElementById("quiz").classList.add("hidden");
-  document.getElementById("result").classList.remove("hidden");
+  hideAll();
 
-  document.getElementById("score").textContent =
+  document
+    .getElementById("result")
+    .classList.remove("hidden");
+
+  document
+    .getElementById("score")
+    .textContent =
     `${score} / ${questions.length}`;
 
   const percentage =
-    Math.round(score / questions.length * 100);
+    Math.round(
+      score /
+      questions.length *
+      100
+    );
 
-  document.getElementById("resultMessage").textContent =
+  document
+    .getElementById("resultMessage")
+    .textContent =
     `正答率 ${percentage}%`;
-}
-
-
-function goHome() {
-
-  document.getElementById("result").classList.add("hidden");
-  document.getElementById("home").classList.remove("hidden");
 
 }
 
